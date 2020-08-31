@@ -1,15 +1,12 @@
 import unittest, sys, pytest
 from transpose import read_file, find_larget, transpose_word, init
-
+from io import StringIO
+from unittest.mock import patch
 
 class TestTransposeLargest(unittest.TestCase):
 
     pytest.TEST_DATA_FOLDER = 'tests/test_data'
 
-    # @pytest.fixture(autouse=True)
-    # def _pass_fixtures(self, capsys):
-    #     self.capsys = capsys
-    
     """
     Positive Cases
     """
@@ -26,21 +23,44 @@ class TestTransposeLargest(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_read_file(self):
-        filepath = f'{pytest.TEST_DATA_FOLDER}/test_data_1.txt'
+        filepath = f'{pytest.TEST_DATA_FOLDER}/example_file.txt'
         actual = read_file(filepath)
-        expected = ['a','ab','abc']
+        expected = ['a','ab','abc','abcd','abcde']
         self.assertEqual(expected, actual)
 
     def test_init(self):
-        sys.argv = ['transpose.py', f'{pytest.TEST_DATA_FOLDER}/test_data_0.txt']
-        actual = init()
-        #print(self.capsys.readouterr())
+        sys.argv = ['transpose.py', f'{pytest.TEST_DATA_FOLDER}/example_file.txt']
+        expected = 'abcde\nedcba'
+        with patch('sys.stdout', new=StringIO()) as output:
+            init()
+        self.assertEqual(output.getvalue().strip(), expected)
+
+    def test_init_numbers(self):
+        sys.argv = ['transpose.py', f'{pytest.TEST_DATA_FOLDER}/numbers_file.txt']
+        expected = '12345\n54321'
+        with patch('sys.stdout', new=StringIO()) as output:
+            init()
+        self.assertEqual(output.getvalue().strip(), expected)
+
+    def test_init_spaced_words(self):
+        sys.argv = ['transpose.py', f'{pytest.TEST_DATA_FOLDER}/spaced_words.txt']
+        expected = 'jumps over the\neht revo spmuj'
+        with patch('sys.stdout', new=StringIO()) as output:
+            init()
+        self.assertEqual(output.getvalue().strip(), expected)
+
+    def test_init_special_chars(self):
+        sys.argv = ['transpose.py', f'{pytest.TEST_DATA_FOLDER}/special_chars.txt']
+        expected = '@#$^&\n&^$#@'
+        with patch('sys.stdout', new=StringIO()) as output:
+            init()
+        self.assertEqual(output.getvalue().strip(), expected)
 
     """
     Negative Cases
     """
     def test_read_file_empty(self):
-        filepath = f'{pytest.TEST_DATA_FOLDER}/test_data_2.txt'
+        filepath = f'{pytest.TEST_DATA_FOLDER}/empty_file.txt'
         actual = read_file(filepath)
         expected = []
         self.assertEqual(expected, actual)

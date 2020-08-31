@@ -18,11 +18,11 @@ def transpose_word(word):
 
 def init():
     if len(sys.argv) < 2:
-        raise IndexError
+        raise IndexError('Expecting only one arg as filepath')
     else:
         filepath = sys.argv[1]
         if os.path.exists(filepath) == False:
-            raise FileNotFoundError
+            raise FileNotFoundError('Invalid filepath')
         else:
             wordlist = read_file(filepath)
             largest_word = find_larget(wordlist)
