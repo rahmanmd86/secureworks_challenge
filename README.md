@@ -74,7 +74,8 @@ secureworks_challenge
 ```
 ## Steps to run script
 
-#### Clone the repository
+ - Clone the repository
+ - Navigate to directory `secureworks_challenge/`
 
 ### Run script as standalone
 
@@ -105,6 +106,10 @@ Running the script
 
 ## Steps to run tests
 
+#### Prequisite
+
+- Ensure the virtualenv (pipenv) is activated before running the tests
+
 Run the command below:
 - `$ sh run_tests.sh`
 
@@ -117,6 +122,9 @@ transpose.py      26      1    96%   36
 Coverage report in browser
 
 - Navigate to `htmlcov` and open `index.html` in browser
+
+----
+## Author: Md Mahbubur Rahman
 
 
 
