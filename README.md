@@ -45,7 +45,7 @@ Assumptions
 - The file is expected to be a text file ie., `.txt` extension
 - The filepath is absolute to the project
 - The script can process only one file at a time (No multi-threading)
-- 
+- The standalone executable is a UNIX executable file, not tested in Windows
 
 
 ## Project Structure
